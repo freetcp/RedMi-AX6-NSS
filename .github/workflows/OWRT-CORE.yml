@@ -1,28 +1,28 @@
 #云编译公用核心
 name: OWRT-CORE
 
-on:
+于:
   #公用核心标识
   workflow_call:
     inputs:
       OWRT_TARGET:
         required: true
-        type: string
+        输入: string
       OWRT_THEME:
         required: true
-        type: string
+        输入: string
       OWRT_NAME:
         required: true
-        type: string
+        输入: string
       OWRT_URL:
         required: true
-        type: string
+        输入: string
       OWRT_PW:
         required: true
-        type: string
+        输入: string
       OWRT_IP:
         required: true
-        type: string
+        输入: string
 
 env:
   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
@@ -47,7 +47,7 @@ jobs:
           docker rmi $(docker images -q)
           sudo -E rm -rf $(cat $GITHUB_WORKSPACE/Depends.txt | sed -n "1{s/\r$//;p;q}")
           sudo -E apt -yqq update
-          sudo -E apt -yqq purge --ignore-missing $(cat $GITHUB_WORKSPACE/Depends.txt | sed -n "2{s/\r$//;p;q}")
+          sudo -E apt -yqq purge docker docker-engine docker.io firefox-esr google-cloud-sdk 2>/dev/null || true
           sudo -E apt -yqq full-upgrade
           sudo -E apt -yqq install $(cat $GITHUB_WORKSPACE/Depends.txt | sed -n "3{s/\r$//;p;q}")
           sudo -E apt -yqq autoremove --purge
